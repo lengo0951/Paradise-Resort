@@ -1,0 +1,148 @@
+<div class="chat">
+    <div class="leftSide">
+        <div class="header-left">
+            <h1>Chats</h1>
+        </div>
+        <!-- Search Chat -->
+        <div class="search_chat">
+            <div>
+                <input type="text" placeholder="Search messages">
+                <i class="fa-solid fa-magnifying-glass"></i> 
+            </div>                
+        </div>
+        <!-- CHAT LIST -->
+        <div class="chatlist">
+            <div class="block"></div>        
+        </div>
+    </div>        
+    <div class="rightSide">
+        <div class="header" style="display: none;">
+            <div class="imgText">
+                <h4></h4>
+            </div>
+        </div>
+        <!-- CHAT-BOX -->
+        <div class="chatbox">   
+            <div class="no-content">                
+            <i class="fa-regular fa-comments"></i>
+            <h2>Select Chat</h2> 
+            </div>                           
+        </div>
+        <div class="chat_input" style="display: none;">
+            <input type="text" placeholder="Type a message">
+            <span><i class="fa-solid fa-paper-plane"></i></span>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+<script>
+    socket = io('http://localhost:3000');
+    socket.on('receichatlist', (chatList) => {
+        renderChatList(chatList);
+        attachClickEventToBlocks();
+        if (currentUsernameBlock) {
+    const blocks = document.querySelectorAll('.chatlist .block');
+    blocks.forEach(block => {
+        const blockUsername = block.querySelector('.listHead h4').innerText;
+        if (blockUsername === currentUsernameBlock) {
+            block.classList.add('active');
+        } else {
+            block.classList.remove('active');
+        }
+    });
+}
+    });
+
+    
+    const chatLists = {{{ chatList }}};
+
+    function attachClickEventToBlocks() {
+    const blocks = document.querySelectorAll('.chatlist .block');
+    blocks.forEach(block => {
+        block.addEventListener('click', () => {
+            // Xử lý khi click vào một block
+            blocks.forEach(b => {
+                b.classList.remove('active');
+            });
+            block.classList.add('active');
+            block.classList.remove('unread');
+            const bElement = block.querySelector('.message_p b');
+            if (bElement) {
+                bElement.remove();
+            }
+            const username = block.querySelector('.listHead h4').innerText;
+            handleBlockClick(username);
+            currentUsernameBlock = username;
+        });
+    });
+}
+
+    function renderChatList(chatList) {
+    const chatlistContainer = document.querySelector('.chatlist');
+
+    chatlistContainer.innerHTML = ''; // Xóa nội dung hiện tại của chatlist trước khi render lại
+
+    chatList.forEach(item => {
+      const block = document.createElement('div');
+      block.classList.add('block');
+
+      const details = document.createElement('div');
+      details.classList.add('details');
+
+      const listHead = document.createElement('div');
+      listHead.classList.add('listHead');
+
+      const username = document.createElement('h4');
+      username.textContent = item.user.username; // Thay username bằng trường tương ứng trong đối tượng user
+
+        const timestamp = item.latestMessage.timestamp;
+        const timestampWithoutMilliseconds = timestamp.slice(0, -5);
+
+        const [datePart, timePart] = timestampWithoutMilliseconds.split('T');
+        const [hours, minutes, seconds] = timePart.split(':');
+        const [year, month, day] = datePart.split('-');
+
+        // Định dạng lại thành chuỗi theo định dạng "hh:mm:ss dd-mm-yyyy"
+        const formattedTime = `${hours}:${minutes}:${seconds} ${day}-${month}-${year}`;
+
+
+      const time = document.createElement('p');
+      time.classList.add('time');
+      time.textContent = formattedTime; // Thay timestamp bằng trường tương ứng trong đối tượng tin nhắn
+
+      listHead.appendChild(username);
+      listHead.appendChild(time);
+
+      const messageP = document.createElement('div');
+      messageP.classList.add('message_p');
+
+      const messageContent = document.createElement('p');
+      messageContent.textContent = item.latestMessage.content; // Thay content bằng trường tương ứng trong đối tượng tin nhắn
+
+      // Tạo một thẻ <b> cho số tin nhắn chưa đọc (nếu có)
+      if (item.latestMessage.unreadCount) {
+        const unreadCount = document.createElement('b');
+        unreadCount.textContent = item.latestMessage.unreadCount;
+        messageP.appendChild(unreadCount);
+      }
+
+      messageP.appendChild(messageContent);
+
+      details.appendChild(listHead);
+      details.appendChild(messageP);
+
+      block.appendChild(details);
+
+      // Kiểm tra và thêm class 'unread' nếu có tin nhắn chưa đọc
+      if (item.latestMessage.unreadCount) {
+        block.classList.add('unread');
+      }
+
+      chatlistContainer.appendChild(block);
+    });
+  }
+  renderChatList(chatLists); 
+</script>
+<script src="/js/admin-chat.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

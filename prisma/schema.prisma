@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  username    String  @unique
+  fullName    String
+  email       String  @unique
+  phoneNumber String  @unique
+  isAdmin     Boolean @default(false)
+  hash        String
+
+  sentMessages   Message[] @relation("SentMessages") 
+  receivedMessages Message[] @relation("ReceivedMessages")
+  Reservation Reservation[]
+
+  @@map("user")
+}
+
+model Room {
+  id          Int    @id @default(autoincrement())
+  roomName    String @unique
+  description String
+  cost        Int
+  imgSrc      String
+  available   Int
+
+  btnExpId    String
+  parExpId    String
+  divExpId    String
+  Reservation Reservation[]
+
+  @@map("room")
+}
+
+model Message {
+  message_id    Int       @id @default(autoincrement())
+  sender_id     Int
+  receiver_id   Int
+  content       String
+  timestamp     DateTime  @default(now())
+  sender        User      @relation("SentMessages", fields: [sender_id], references: [id])
+  receiver      User      @relation("ReceivedMessages", fields: [receiver_id], references: [id])
+
+  @@map("messages")
+}
+
+model Reservation {
+  res_id          Int      @id @default(autoincrement())
+  user_id         Int
+  room_id         Int
+  fullName        String
+  phoneNumber     String
+  booking_time    DateTime @default(now())
+  start           String
+  days            Int
+  total_cost      Float
+  status          Int
+
+  // status = [ 0 = Active, 1 = Pending, 2 = End, 3 = Successed]
+
+  user User @relation(fields: [user_id], references: [id])
+  room Room @relation(fields: [room_id], references: [id])
+
+  @@map("reservation")
+}

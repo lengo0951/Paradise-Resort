@@ -1,0 +1,119 @@
+.home-faci {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(55, 61, 130, 0.5), rgba(30, 30, 30, 0.5)),  url(/img/facilities/faci.jpg);
+    background-size: cover;
+    background-position: center;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    align-items: center;
+}
+.faci-first-description{
+    text-align: center; 
+    margin: 3% 20% 3% 20%;
+}
+
+.faci-first-description-bigtext{
+    font-size: 40px;
+    font-weight: bold;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.faci-first-description-smalltext{
+    margin-top: 2%;
+    font-size: 14px;
+}
+
+.faci-detail{
+    position: relative;
+    width: 70%;
+    height: 80vh;
+    margin: 5% 15%;
+    border-radius: 15px;
+}
+
+.faci-detail-text{
+    background-color: white;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 2px;
+    position: absolute;
+    padding-top: 1%;
+    width: 40%;
+    bottom: 0;
+    left: 308px;
+}
+
+.faci-background-gym{
+    background: url(/img/facilities/faci-gym.jpg);
+    background-size: cover;  
+    background-position: center;
+ }
+
+ .faci-background-poolsidebar{
+    background: url(/img/facilities/faci-poolside_bar.jpg);
+    background-size: cover;  
+    background-position: center;
+ }
+
+ .faci-background-spa{
+    background: url(/img/facilities/faci-spa.jpg);
+    background-size: cover;  
+    background-position: center;
+ }
+
+ .faci-background-swimmingpool{
+    background: url(/img/facilities/faci-swimming_pool.jpg);
+    background-size: cover;  
+    background-position: center;
+ }
+
+ .faci-background-restaurant{
+    background: url(/img/facilities/faci-restaurant.jpg);
+    background-size: cover;  
+    background-position: center;
+ }
+
+ .faci-background-laundry{
+    background: url(/img/facilities/faci-laundry.jpg);
+    background-size: cover;  
+    background-position: center;
+ }
+ /* Responsive Design */
+ /* Tablet */
+ @media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .home-faci {
+      height: max-content;
+    }
+    .faci-first-description-bigtext {
+        font-size: 30px;
+    }
+    .faci-first-description-smalltext {
+        font-size: 12px;
+    }
+    .faci-background-gym {
+        height: 500px;
+    }
+    .faci-background-poolsidebar {
+        height: 500px;
+    }
+    .faci-background-spa {
+        height: 500px;
+    }
+    .faci-background-swimmingpool {
+        height: 500px;
+    }
+    .faci-background-restaurant {
+        height: 500px;
+    }
+    .faci-background-laundry {
+        height: 500px;
+    }
+    .faci-detail-text {
+        font-size: 20px;
+        left: 30%;
+    }
+}

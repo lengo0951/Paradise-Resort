@@ -1,0 +1,305 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+:root {
+  --primary-color: #e0b973;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+/*Scroll bar */
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #dfe9eb;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: #b8c0c2;
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: #b8c0c2;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #397524;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #62a34b;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #62a34b;
+}
+/*Slogan annimation*/
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+svg {
+  font-family: 'Russo One', sans-serif;
+  width: 110%;
+  height: 100%;
+}
+svg text {
+  animation: stroke 5s infinite alternate;
+  stroke-width: 2;
+  stroke: var(--primary-color);
+  font-size: 100px;
+}
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+  svg text {
+    font-size: 70px;
+  }
+}
+@keyframes stroke {
+  0% {
+    fill: rgba(72, 138, 204, 0);
+    stroke: var(--primary-color);
+    stroke-dashoffset: 25%;
+    stroke-dasharray: 0 50%;
+    stroke-width: 2;
+  }
+  70% {
+    fill: rgba(72, 138, 204, 0);
+    stroke: rgb(194, 169, 26);
+  }
+  80% {
+    fill: rgba(72, 138, 204, 0);
+    stroke: rgb(194, 169, 26);
+    stroke-width: 3;
+  }
+  100% {
+    fill: rgb(194, 169, 26);
+    stroke: rgba(54, 95, 160, 0);
+    stroke-dashoffset: -25%;
+    stroke-dasharray: 50% 0;
+    stroke-width: 0;
+  }
+}
+.home-text-signature {
+  text-align: left;
+}
+.logo img {
+  max-height: 75px;
+  max-width: 149px;
+  margin-top: 0%;
+  margin-left: 20px;
+}
+.slogan {
+  color: black;
+  font-weight: bold;
+  margin-left: 10px;
+}
+body {
+  background: white;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+}
+header {
+  background-color: rgb(255, 255, 255);
+  height: 60px;
+  line-height: 6vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: ease 0.4s;
+}
+.navbar {
+  width: 100%;
+  height: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/*Menu Style*/
+.navlinks {
+  display: flex;
+}
+.navlinks a {
+  display: inline-block;
+  text-transform: uppercase;
+  color: black;
+  margin: 0 10px;
+  transition: 0.2s;
+  text-decoration: none;
+}
+
+.navlinks li > i:hover {
+  color: var(--primary-color);
+}
+.navbar .navlinks a:hover {
+  color: var(--primary-color);
+  text-decoration: overline;
+}
+.navbar .navlinks li {
+  list-style: none;
+  padding: 10px 20px;
+}
+.navbar .menu {
+  color: black;
+  font-size: 2rem;
+  z-index: 10001;
+  cursor: pointer;
+  display: none;
+}
+button {
+  border: none;
+  background: none;
+  outline: none;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.btn-login {
+  display: inline-block;
+  font-size: 15px;
+  padding: 10px 20px;
+  background: #e0b973;
+  color: white;
+  border-radius: 4px;
+  transition: ease 0.4s;
+}
+.btn-login:hover {
+  transform: scale(1.1);
+}
+/* Dropdown menu */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 2rem;
+  top: 60px;
+  height: 0;
+  width: 300px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.dropdown-menu.open{
+  height: max-content;
+}
+.dropdown-menu li {
+  list-style: none;
+  text-transform: uppercase;
+  padding: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dropdown-menu li a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+.dropdown-menu li a {
+  text-decoration: none;
+  color: black;
+}
+/* Responsive design */
+@media only screen and (max-width: 1024px) {
+  .navbar .navlinks, .navbar .btn-login {
+    display: none;
+  }
+  .navbar .menu {
+    display: block;
+    padding-right: 2rem;
+  }
+  .dropdown-menu {
+    display: block;
+  }
+} 
+@media only screen and (max-width: 740px) {
+  .dropdown-menu {
+    left: 2rem;
+    width: unset;
+  }
+  
+}
+section {
+  padding: 80px 18%;
+}
+.home {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url(/img/index/banner-lammo.jpg);
+  background-size: cover;
+  background-position: center;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  align-items: center;
+}
+.home-text h1 {
+  font-size: 5rem;
+  line-height: 1.2;
+  color: white;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.home-text p {
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 38px;
+  margin-bottom: 50px;
+}
+
+.body-end {
+  padding-bottom: 5%;
+  background-color: white;
+  text-align: center;
+}
+.body-end-header {
+  font-weight: bold;
+  font-size: 26px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.body-end-text-1 {
+  padding-top: 3px;
+  font-size: 18px;
+}
+.body-end-text-2 {
+  font-size: 14px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.book-btn {
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 16px;
+  padding: 15px 30px;
+  background: #e0b973;
+  color: white;
+  border-radius: 4px;
+  transition: ease 0.4s;
+}
+.book-btn:hover {
+  transform: scale(1.1);
+}
+/* Responsive Design*/
+@media only screen and (max-width: 1023px) {
+  .home {
+    height: max-content;
+  }
+}
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+  .body-end-header {
+    font-size: 20px;
+  }
+  .body-end-text-1 {
+    font-size: 15px;
+  }
+  .body-end-text-2 {
+    font-size: 12px;
+  }
+}
+/* -------header-------- */
