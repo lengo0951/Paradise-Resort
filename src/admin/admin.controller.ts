@@ -1,9 +1,8 @@
-import { Body, Controller, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common'; 
+import { Body, Controller, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { FuncService } from 'src/func/func.service';
 import { Response, Request } from 'express'
-import { Message,Reservation } from '@prisma/client';
-import { CheckTokenMiddleware } from 'src/middleware/checkToken.middleware';
+import { Message } from '@prisma/client';
 import { AdminGuard } from './admin.guard';
 @Controller('admin')
 export class AdminController {
@@ -58,4 +57,30 @@ export class AdminController {
     const data = await this.adminService.getAllReservations();
     return { data}; 
 }
+  @Get('admin-home')
+  adminHome(@Req() req: Request, @Res() res: Response) {
+  res.render('admin-home', {
+    layout: 'admin-layout'
+  }) 
+}
+  @Get('dataRoom')
+  async getDataRoom() {
+    return this.adminService.getAllRoom();
+  }
+  @Get('admin-users')
+  adminUser(@Req() req: Request, @Res() res: Response) {
+  res.render('admin-users', {
+    layout: 'admin-layout'
+  }) 
+  }
+  @Get('dataUser')
+  async getDataUser()
+  {
+    return this.adminService.getDataUser();
+  }
+  @Get('data-review')
+  async getAllReviews() {
+    return this.adminService.getAllReviews();
+  }
+
 }

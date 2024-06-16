@@ -1,20 +1,19 @@
 import { Injectable } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
 import { Request, Response } from 'express'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { format } from 'date-fns'
+import { FuncService } from 'src/func/func.service'
 
 @Injectable()
 export class ReservationService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly jwtService: JwtService
+    private readonly funcService: FuncService
   ) {}
 
   // ---------------------------------- Get info of all reservation base on username, plus some info of references room ----------------------------------
   async getAllReservation(req: Request) {
-    const token = req.cookies.jwt
-    const decoded_username = this.jwtService.decode(token).username
+    const decoded_username  = this.funcService.getUsernameFromJwt_Req(req).username
 
     // Get user from username
     const user = await this.prisma.user.findUnique({
@@ -50,6 +49,15 @@ export class ReservationService {
         // Add 2 new fields to each reservation
         element['imgSrc'] = room.imgSrc
         element['roomName'] = room.roomName
+
+        // Add the specified number of days
+        const [day, month, year] = element['start'].split('-');
+        const date = new Date(`${year}-${month}-${day}`);
+        date.setDate(date.getDate() + element['days']);
+        const newDay = String(date.getDate()).padStart(2, '0');
+        const newMonth = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based in JS
+        const newYear = date.getFullYear();
+        element['end'] =  `${newDay}-${newMonth}-${newYear}`;
 
         // add field to display status for each reservation
         if (element.status === 0) 
@@ -122,7 +130,7 @@ export class ReservationService {
             },
             data: {
                 available: {
-                decrement: 1
+                    decrement: 1
                 }
             }
         })
@@ -162,7 +170,7 @@ export class ReservationService {
         },
         data: {
             available: {
-            increment: 1
+                increment: 1
             }
         }
     })
@@ -172,31 +180,10 @@ export class ReservationService {
   async success(reservation_id) {
     await this.prisma.reservation.update({
         where: {
-            res_id: Number(reservation_id)
+            res_id:  Number(reservation_id)
         },
         data: {
             status: 0
-        }
-    })
-
-    const reservation = await this.prisma.reservation.findUnique({
-        where: {
-            res_id: Number(reservation_id)
-        },
-        select: {
-            room_id: true
-        }
-    })
-
-    // Update available room (increase by 1)
-    await this.prisma.room.update({
-        where: {
-            id: reservation.room_id,
-        },
-        data: {
-            available: {
-            increment: 1
-            }
         }
     })
   }

@@ -13,8 +13,10 @@ export class ReservationController {
   @Get()
   @Render('reservation')
   async reservation(@Req() req: Request) {
-    return { ...this.funcService.getUsernameFromJwt_Req(req),
-      ...await this.reservationService.getAllReservation(req)
+    return {
+      ...this.funcService.getUsernameFromJwt_Req(req),
+      ...await this.reservationService.getAllReservation(req),
+      css: ['reservation']
     }
   }
 
@@ -28,6 +30,7 @@ export class ReservationController {
   async cancelReservation(@Body() body: any) {
     return await this.reservationService.cancel(body.res_id)
   }
+  
   @Post('success')
   async successReservation(@Body() body: any) {
     return await this.reservationService.success(body.res_id)

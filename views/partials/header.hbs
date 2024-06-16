@@ -1,22 +1,20 @@
 <header>
   <div class="navbar">
-    <div class="logo"><a href='/' class='logo'><img
-          src='/img/header-footer/Group2.svg'
-          alt='logo' /></a></div>
+    <div class="logo"><a href='/' class='logo' aria-label="Go back to home page"><img src='/img/header-footer/Group2.svg' alt=""></a></div>
     <ul class='navlinks'>
       <li><a href='/'>home</a></li>
       <li><a href='/facilities'>facilities</a></li>
       <li><a href='/room'>rooms</a></li>
-      <li><a href='/contact'>contact-us</a></li>
       <li><a href='/reservation'>reservation </a></li>
-      <li class="search"><i class='fa-solid fa-magnifying-glass'></i></li>
+      <li><a href='/review'>review</a></li>
+     
+      {{!-- <li class="search"><i class='fa-solid fa-magnifying-glass'></i></li> --}}
     </ul>
     <nav>
         {{#if username}}
-            <a href="/user/{{username}}">{{username}}</a>
+          <a href="/user/{{username}}">{{username}}</a>
         {{else}}
-            <a href='/auth/login' class="login-button"><button class='btn-login'><i
-          class='fa-solid fa-arrow-right-to-bracket'></i> Login</button></a>
+          <button class='btn-login' onclick="login()"><i class='fa-solid fa-arrow-right-to-bracket'></i> Login</button>
         {{/if}}
     </nav>
 
@@ -27,8 +25,8 @@
       <li><a href='/'>home</a></li>
       <li><a href='/facilities'>facilities</a></li>
       <li><a href='/room'>rooms</a></li>
-      <li><a href='/contact'>contact-us</a></li>
       <li><a href='/reservation'>reservation </a></li>
+      <li><a href='/review'>review</a></li>
     </ul>
   </div>
 </header>
@@ -45,8 +43,4 @@
     ? 'fa-solid fa-xmark'
     : 'fa-solid fa-bars'
   }
-
-  document.addEventListener('DOMContentLoaded', function() {
-  document.querySelector('.login-button').addEventListener('click', function() {
-  window.location.href = '/auth/login'; }); });
 </script>
