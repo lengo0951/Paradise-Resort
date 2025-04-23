@@ -6,12 +6,11 @@ import { ValidationPipe } from '@nestjs/common'
 import Handlebars from 'handlebars'
 
 // For dev local
-// import * as exphbs from 'express-handlebars';
-// import * as cookieParser from 'cookie-parser';
-
-// For hosting on vercel
-import exphbs from 'express-handlebars';
+import { create } from 'express-handlebars'
 import cookieParser from 'cookie-parser';
+// For hosting on vercel
+// import exphbs from 'express-handlebars'; 
+// import cookieParser from 'cookie-parser';
 
 declare const module: any;
 
@@ -36,14 +35,14 @@ async function bootstrap() {
 
   app.engine(
     'hbs',
-    exphbs({
+    create({
       extname: 'hbs',
       partialsDir: join(__dirname, '..', 'views/partials'),
       defaultLayout: 'main.hbs',
-    }),
+    }).engine
   )
 
-  Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+  Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this)
   })
 
